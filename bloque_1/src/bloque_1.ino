@@ -58,12 +58,7 @@ void setup() {
             encontrados++;
         }
     }
-    if (encontrados == 0) {
-        Serial.println("[I2C] ❌ No se detectaron dispositivos en el bus.");
-        Serial.println("[DIAGNÓSTICO] Revisa que SDA esté en GPIO21, SCL en GPIO22, 3V3 y GND.");
-    } else {
-        Serial.printf("\n--- BARRIDO FINALIZADO: %d dispositivo(s) encontrado(s) ---\n", devicesFound);
-    }
+   
 }
 
 void loop() {
