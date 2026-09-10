@@ -57,12 +57,15 @@ void setup() {
             }
             encontrados++;
         }
+<<<<<<< HEAD
     }
     if (encontrados == 0) {
         Serial.println("[I2C] ❌ No se detectaron dispositivos en el bus.");
         Serial.println("[DIAGNÓSTICO] Revisa que SDA esté en GPIO21, SCL en GPIO22, 3V3 y GND.");
     } else {
         Serial.printf("\n--- BARRIDO FINALIZADO: %d dispositivo(s) encontrado(s) ---\n", devicesFound);
+=======
+>>>>>>> d181c3a6d4e330c39b88cd9034f6614823ac6436
     }
    
 }
@@ -70,4 +73,8 @@ void setup() {
 void loop() {
     // El escaneo de hardware se ejecuta una sola vez al encender.
     delay(1000);
+<<<<<<< HEAD
    } 
+=======
+}
+>>>>>>> d181c3a6d4e330c39b88cd9034f6614823ac6436
