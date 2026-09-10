@@ -85,16 +85,17 @@ git config --global user.email "tu_correo_registrado@ejemplo.com"
 
 > [!TIP]
 > **Abre el archivo \`02-bus-i2c-oled.code-workspace\` en VS Code:**  
-> Ve a **Archivo ➔ Abrir espacio de trabajo desde archivo...** y selecciona `02-bus-i2c-oled.code-workspace`. Esto cargará de inmediato los 4 bloques como proyectos independientes sin errores de compilación.
+> Ve a **Archivo ➔ Abrir espacio de trabajo desde archivo...** y selecciona `02-bus-i2c-oled.code-workspace` (o haz doble clic sobre él en Windows). Esto cargará de inmediato los 4 bloques como proyectos independientes en PlatformIO.
 
-1. **Seleccionar el Bloque:** En el explorador de VS Code, abre el bloque que estás trabajando (ej. `bloque_1`).
-2. **Resolver los `// TODO:`:** Abre `src/bloque_X.ino` y completa la lógica faltante guiándote con el [Cheatsheet](CHEATSHEET_ESTUDIANTE.md) y la Guía Maestra Web.
-3. **Compilar con PlatformIO:** En la barra lateral izquierda, haz clic en la hormiga 🐜 ➔ **PROJECT TASKS** ➔ selecciona tu bloque ➔ haz clic en **Build**.
-4. **Simular en Wokwi:** Abre el archivo `diagram.json` de tu bloque, presiona `F1` y ejecuta `Wokwi: Start Simulator`.
-5. **Verificar Salidas:**
-   - **Serial Monitor (115200 bps):** Mensajes y escaneo limpios.
-   - **Pantalla OLED:** Elementos gráficos visibles en Wokwi.
-6. **Entrega en GitHub:** Guarda tus commits con formato semántico y abre tu Pull Request comparando tu rama `entrega/nombre-apellido` contra la rama `base: main` del docente.
+> [!IMPORTANT]
+> **¿Por qué Wokwi necesita compilación previa con PlatformIO?**  
+> En la extensión de VS Code, Wokwi **no compila código por sí mismo**; es un simulador de hardware que ejecuta el archivo binario (`.pio/build/esp32/firmware.bin`) generado por el compilador de PlatformIO.  
+> Si pulsas *Play* en Wokwi antes de compilar, el simulador reportará que no encuentra el firmware. El orden correcto siempre es:
+> 1. **Escribir el código:** Edita `src/bloque_X.ino` y completa los `// TODO:`.
+> 2. **Compilar con PlatformIO:** Haz clic en el visto **Build (✔)** en la barra azul inferior (o en el icono de la hormiga 🐜 ➔ **PROJECT TASKS** ➔ **esp32** ➔ **Build**). Verifica que la terminal muestre `[SUCCESS]`.
+> 3. **Simular en Wokwi:** Abre el archivo `diagram.json` de tu bloque y pulsa el botón verde **Start Simulation (Play)** (o presiona `F1` ➔ `Wokwi: Start Simulator`).
+> 4. **Verificar Salidas:** Abre el **Serial Monitor** (115200 bps) o mira la pantalla OLED encenderse en la simulación.
+> 5. **Entrega en GitHub:** Guarda tus commits con formato semántico y abre tu Pull Request comparando tu rama `entrega/nombre-apellido` contra la rama `base: main` del docente.
 
 ---
 
