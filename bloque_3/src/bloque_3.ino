@@ -21,23 +21,21 @@ void logBoot(const char* moduleName, bool isOk) {
     // TODO 3.1: Imprimir el nombre del módulo en la posición actual del cursor:
     // display.print(moduleName);
     /* ESCRIBE TU CÓDIGO AQUÍ */
-
+    display.print(moduleName);
     // TODO 3.2: Alinear el estado a la derecha en la columna X=95 sin alterar la fila Y actual.
     // Pregunta Guía: ¿Por qué usamos display.getCursorY() en lugar de un número fijo como 20?
     // Pista: display.setCursor(95, display.getCursorY());
     /* ESCRIBE TU CÓDIGO AQUÍ */
-
+    display.setCursor(95, display.getCursorY());
     // TODO 3.3: Según el valor de isOk (true/false), imprimir "[OK]" o "[ERR]":
-    // if (isOk) {
-    //     display.println("[OK]");
-    // } else {
-    //     display.println("[ERR]");
-    // }
-    /* ESCRIBE TU CÓDIGO AQUÍ */
-
+     if (isOk) {
+         display.println("[OK]");
+     } else {
+         display.println("[ERR]");
+     }
     // TODO 3.4: Volcar los cambios del buffer al vidrio físico y pausar 200ms para efecto visual:
-    // display.display();
-    // delay(200);
+ display.display();
+ delay(200);
 }
 
 void setup() {
@@ -67,7 +65,8 @@ void setup() {
     // logBoot("ESP32 Core", true);
     // logBoot("Sensor I2C", true);
     /* ESCRIBE TU CÓDIGO AQUÍ */
-
+    logBoot("ESP32 Core", true);
+    logBoot("Sensor I2C", false);
     Serial.println("[BLOQUE 3] Telemetría renderizada correctamente.");
 }
 
