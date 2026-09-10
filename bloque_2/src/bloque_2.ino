@@ -18,7 +18,8 @@
 // (Ancho, Alto, Puntero al Bus Wire, Pin de Reset)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET_PIN);
 
-void setup() {
+void setup()
+{
     Serial.begin(SERIAL_BAUD);
     delay(1000);
     Serial.println("\n[BLOQUE 2] Inicializando Pantalla OLED SSD1306...");
@@ -29,10 +30,12 @@ void setup() {
     // TODO 2.1: Arrancar la pantalla activando la bomba de carga interna (charge pump)
     // pasando la constante SSD1306_SWITCHCAPVCC y la dirección 0x3C.
     // Pregunta Guía: ¿Qué hace la bomba de carga con el voltaje de 3.3V?
-    // if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR)) {
-    //     Serial.println("[OLED] ❌ ERROR: Pantalla no detectada en 0x3C.");
-    //     while (true); // Detiene la ejecución si hay falla física
-    // }
+    if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR))
+    {
+        Serial.println("[OLED] ❌ ERROR: Pantalla no detectada en 0x3C.");
+        while (true)
+            ; // Detiene la ejecución si hay falla física
+    }
 
     Serial.println("[OLED] Pantalla SSD1306 inicializada [OK]");
 
@@ -44,15 +47,22 @@ void setup() {
     // 5. Escribir el título: display.println(">> ESP32 SISTEMA <<");
     // 6. Trazar una línea horizontal en Y=10: display.drawLine(0, 10, 128, 10, SSD1306_WHITE);
     /* ESCRIBE TU CÓDIGO AQUÍ */
+    display.clearDisplay();                          // 2. Borra el cuaderno borrador en RAM
+    display.setTextSize(1);                          // 3. Tamaño de fuente (6x8 px por letra)
+    display.setTextColor(SSD1306_WHITE);             // 4. Color blanco activo
+    display.setCursor(8 , 0);                         // 5. Ubicar el cursor en (X=0, Y=0)
+    display.println(">> ESP32 SISTEMA <<");          // 6. Escribir en el borrador
+    display.drawLine(0, 10, 128, 10, SSD1306_WHITE); // Línea horizontal
 
     // TODO 2.3: ¡LA ORDEN MÁGICA!
     // Pregunta Clave: Si solo escribiste en la memoria RAM, ¿por qué la pantalla sigue negra?
     // ¿Qué orden vuelca el buffer hacia los píxeles físicos del vidrio?
-    // display.display();
+    display.display();
 
     Serial.println("[OLED] Cabecera visual renderizada exitosamente.");
 }
 
-void loop() {
+void loop()
+{
     delay(1000);
 }
