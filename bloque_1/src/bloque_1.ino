@@ -22,7 +22,7 @@ void setup() {
     // TODO 1.1: Inicializar el bus I2C en los pines SDA y SCL del ESP32.
     // Pregunta Guía: ¿Qué función de la librería Wire recibe (SDA_PIN, SCL_PIN)?
     // Pista: Usa Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    /* ESCRIBE TU CÓDIGO AQUÍ. */
 
     // TODO 1.2: Configurar la velocidad del reloj a 400kHz (Modo Rápido).
     // Pregunta Guía: ¿Qué función configura la frecuencia de reloj del bus I2C?
