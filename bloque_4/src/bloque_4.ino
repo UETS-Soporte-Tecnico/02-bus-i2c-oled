@@ -133,7 +133,6 @@ void setup() {
     Serial.println("[SISTEMA] ❌ Falla crítica: no se puede arrancar (bus I2C vacío o pantalla no responde).");
 }
 }
-
 void loop() {
     delay(1000);
 }
