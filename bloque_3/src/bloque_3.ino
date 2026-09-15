@@ -24,22 +24,12 @@ void logBoot(const char* moduleName, bool isOk) {
 
     display.setCursor(95, display.getCursorY());
 
-    // TODO 3.3: Según el valor de isOk (true/false), imprimir "[OK]" o "[ERR]":
-    // if (isOk) {
-    //     display.println("[OK]");
-    // } else {
-    //     display.println("[ERR]");
-    // }
-    /* ESCRIBE TU CÓDIGO AQUÍ */
     if (isOk){
         display.println("[OK]");
     } else {
         display.println("[ERR]");
     }
 
-    // TODO 3.4: Volcar los cambios del buffer al vidrio físico y pausar 200ms para efecto visual:
-    // display.display();
-    // delay(200);
     display.display();
     delay(200);
 }
@@ -60,17 +50,13 @@ void setup() {
     display.setTextColor(SSD1306_WHITE);
     display.setTextSize(1);
     
-    // Cabecera
+
     display.setCursor(8, 0);
     display.println(">> ESP32 SISTEMA <<");
     display.drawLine(0, 10, 128, 10, SSD1306_WHITE);
     display.setCursor(0, 14); // Deja el cursor listo en la primera fila de datos
     display.display();
 
-    // TODO 3.5: Probar la función logBoot() con dos módulos de prueba:
-    // logBoot("ESP32 Core", true);
-    // logBoot("Sensor I2C", true);
-    /* ESCRIBE TU CÓDIGO AQUÍ */
     logBoot("ESP32 Core", true);
     logBoot("Sensor I2C", true);
 
