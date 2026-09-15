@@ -1,5 +1,5 @@
 // ============================================================================
-// UETS SOPORTE TÉCNICO — SEMANA 02 — BLOQUE 2: INICIALIZACIÓN OLED & CABECERA
+// UETS SOPORTE TÉCNICO — SEMANA 02 — BLOQUE 3: TELEMETRÍA CON logBoot()
 // 3° Bachillerato Técnico en Informática (2026–2027)
 // ============================================================================
 
@@ -14,43 +14,52 @@
 #define OLED_I2C_ADDR 0x3C
 #define SERIAL_BAUD 115200
 
-// Instanciación del objeto display con sus 4 parámetros:
-// (Ancho, Alto, Puntero al Bus Wire, Pin de Reset)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET_PIN);
+
+// Función modular reutilizable para imprimir módulos con estado alineado
+void logBoot(const char* moduleName, bool isOk) {
+    display.print(moduleName);
+
+     display.setCursor(95, display.getCursorY());
+
+    if (isOk) {
+        display.println("[OK]");
+    } else {
+        display.println("[ERR]");
+    }
+    
+    display.display();
+    delay(200);
+}
 
 void setup() {
     Serial.begin(SERIAL_BAUD);
     delay(1000);
-    Serial.println("\n[BLOQUE 2] Inicializando Pantalla OLED SSD1306...");
+    Serial.println("\n[BLOQUE 3] Demostración de Telemetría logBoot()...");
 
-    // Inicializamos el bus I2C en los pines por defecto del ESP32 (SDA=21, SCL=22)
     Wire.begin(21, 22);
 
-    // TODO 2.1: Arrancar la pantalla activando la bomba de carga interna (charge pump)
-    // pasando la constante SSD1306_SWITCHCAPVCC y la dirección 0x3C.
-    // Pregunta Guía: ¿Qué hace la bomba de carga con el voltaje de 3.3V?
-    // if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR)) {
-    //     Serial.println("[OLED] ❌ ERROR: Pantalla no detectada en 0x3C.");
-    //     while (true); // Detiene la ejecución si hay falla física
-    // }
+    if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR)) {
+        Serial.println("[OLED] ERROR: Pantalla no detectada.");
+        while (true);
+    }
 
-    Serial.println("[OLED] Pantalla SSD1306 inicializada [OK]");
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(1);
+    
+    // Cabecera
+    display.setCursor(8, 0);
+    display.println(">> ESP32 SISTEMA <<");
+    display.drawLine(0, 10, 128, 10, SSD1306_WHITE);
+    display.setCursor(0, 14); // Deja el cursor listo en la primera fila de datos
+    display.display();
 
-    // TODO 2.2: Construir la cabecera visual en el buffer RAM:
-    // 1. Limpiar el cuaderno borrador en RAM con display.clearDisplay();
-    // 2. Definir color blanco con display.setTextColor(SSD1306_WHITE);
-    // 3. Definir tamaño de letra 1 con display.setTextSize(1);
-    // 4. Ubicar el cursor en (X=8, Y=0) con display.setCursor(8, 0);
-    // 5. Escribir el título: display.println(">> ESP32 SISTEMA <<");
-    // 6. Trazar una línea horizontal en Y=10: display.drawLine(0, 10, 128, 10, SSD1306_WHITE);
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    
+    logBoot("ESP32 Core", true);
+    logBoot("Sensor I2C", true);
 
-    // TODO 2.3: ¡LA ORDEN MÁGICA!
-    // Pregunta Clave: Si solo escribiste en la memoria RAM, ¿por qué la pantalla sigue negra?
-    // ¿Qué orden vuelca el buffer hacia los píxeles físicos del vidrio?
-    // display.display();
-
-    Serial.println("[OLED] Cabecera visual renderizada exitosamente.");
+    Serial.println("[BLOQUE 3] Telemetría renderizada correctamente.");
 }
 
 void loop() {
