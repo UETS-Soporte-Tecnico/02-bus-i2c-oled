@@ -5,12 +5,25 @@
 
 #include <Arduino.h>
 #include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 #define SERIAL_BAUD 115200
 #define I2C_SDA_PIN 21
 #define I2C_SCL_PIN 22
 #define I2C_CLOCK_SPEED 400000 // 400 kHz (Modo Rápido)
 #define OLED_I2C_ADDR 0x3C     // Dirección física esperada de la pantalla OLED
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+
+Adafruit_SSD1306 display(
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT,
+    &Wire,
+    OLED_RESET
+);
 
 void setup() {
     Serial.begin(SERIAL_BAUD);
@@ -23,11 +36,13 @@ void setup() {
     // Pregunta Guía: ¿Qué función de la librería Wire recibe (SDA_PIN, SCL_PIN)?
     // Pista: Usa Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
     /* ESCRIBE TU CÓDIGO AQUÍ */
+    Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
 
     // TODO 1.2: Configurar la velocidad del reloj a 400kHz (Modo Rápido).
     // Pregunta Guía: ¿Qué función configura la frecuencia de reloj del bus I2C?
     // Pista: Usa Wire.setClock(I2C_CLOCK_SPEED);
     /* ESCRIBE TU CÓDIGO AQUÍ */
+    Wire.setClock(I2C_CLOCK_SPEED);
 
     Serial.println("[I2C] Bus configurado en SDA:GPIO21, SCL:GPIO22 a 400kHz.\n");
     Serial.println("--- INICIANDO BARRIDO DE DIRECCIONES (0x01 .. 0x7E) ---");
@@ -41,6 +56,8 @@ void setup() {
         // 1. Iniciar transmisión con Wire.beginTransmission(address);
         // 2. Finalizar transmisión capturando el byte de error: byte error = Wire.endTransmission();
         /* ESCRIBE TU CÓDIGO AQUÍ */
+        Wire.beginTransmission(address);
+        byte error = Wire.endTransmission();
 
         // TODO 1.5: Evaluar la respuesta del periférico:
         // Pregunta Guía: ¿Qué valor devuelve Wire.endTransmission() cuando el periférico responde con ACK (Presente)?
@@ -53,6 +70,15 @@ void setup() {
         //     }
         //     devicesFound++;
         // }
+        if (error == 0) {
+            Serial.printf("[I2C] Dispositivo detectado en: 0x%02X ", address);
+            if (address == OLED_I2C_ADDR) {
+                Serial.println("➔ [Display OLED SSD1306] [OK]");
+            } else {
+                Serial.println("➔ [Periférico Desconocido]");
+            }
+            devicesFound++;
+        }
     }
 
     if (devicesFound == 0) {
@@ -61,9 +87,61 @@ void setup() {
     } else {
         Serial.printf("\n--- BARRIDO FINALIZADO: %d dispositivo(s) encontrado(s) ---\n", devicesFound);
     }
+
+    if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR)) {
+        Serial.println("[OLED] ERROR: Pantalla no detectada.");
+        while (true);
+    }
+
+    display.clearDisplay();
+    display.display();
 }
 
 void loop() {
-    // El escaneo de hardware se ejecuta una sola vez al encender.
-    delay(1000);
+    dibujarOjos(0); 
+    delay(3000);
+
+    dibujarOjos(1);
+    delay(80);
+    dibujarOjos(2);
+    delay(120);
+
+    dibujarOjos(1);
+    delay(80);
+}
+
+void dibujarOjos(int estadoParpado) {
+    display.clearDisplay();
+
+    int anchoOjo = 36;
+    int altoOjoAbierto = 36;
+    int yOjo = 14;
+
+    int xOjoIzquierdo = 14;
+    int xOjoDerecho = 78;
+
+    if (estadoParpado == 0) {
+        display.fillRoundRect(xOjoIzquierdo, yOjo, anchoOjo, altoOjoAbierto, 8, SSD1306_WHITE);
+        display.fillRoundRect(xOjoDerecho, yOjo, anchoOjo, altoOjoAbierto, 8, SSD1306_WHITE);
+
+        display.fillRoundRect(xOjoIzquierdo + 10, yOjo + 10, 12, 16, 4, SSD1306_BLACK);
+        display.fillRoundRect(xOjoDerecho + 10, yOjo + 10, 12, 16, 4, SSD1306_BLACK);
+
+    } 
+    else if (estadoParpado == 1) {
+        int altoMedio = 12;
+        int yMedio = yOjo + 12;
+        
+        display.fillRoundRect(xOjoIzquierdo, yMedio, anchoOjo, altoMedio, 4, SSD1306_WHITE);
+        display.fillRoundRect(xOjoDerecho, yMedio, anchoOjo, altoMedio, 4, SSD1306_WHITE);
+    } 
+    else if (estadoParpado == 2) {
+        int altoCerrado = 4;
+        int yCerrado = yOjo + 16;
+        
+        display.fillRoundRect(xOjoIzquierdo, yCerrado, anchoOjo, altoCerrado, 2, SSD1306_WHITE);
+        display.fillRoundRect(xOjoDerecho, yCerrado, anchoOjo, altoCerrado, 2, SSD1306_WHITE);
+    }
+
+    display.display();
 }

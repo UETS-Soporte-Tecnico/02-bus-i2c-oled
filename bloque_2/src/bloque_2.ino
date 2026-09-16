@@ -33,6 +33,10 @@ void setup() {
     //     Serial.println("[OLED] ❌ ERROR: Pantalla no detectada en 0x3C.");
     //     while (true); // Detiene la ejecución si hay falla física
     // }
+    if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR)) {
+        Serial.println("[OLED] ❌ ERROR: Pantalla no detectada en 0x3C.");
+        while (true);
+    }
 
     Serial.println("[OLED] Pantalla SSD1306 inicializada [OK]");
 
@@ -44,12 +48,18 @@ void setup() {
     // 5. Escribir el título: display.println(">> ESP32 SISTEMA <<");
     // 6. Trazar una línea horizontal en Y=10: display.drawLine(0, 10, 128, 10, SSD1306_WHITE);
     /* ESCRIBE TU CÓDIGO AQUÍ */
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(1);
+    display.setCursor(8, 0);
+    display.println(">> ESP32 SISTEMA <<");
+    display.drawLine(0, 10, 128, 10, SSD1306_WHITE);
 
     // TODO 2.3: ¡LA ORDEN MÁGICA!
     // Pregunta Clave: Si solo escribiste en la memoria RAM, ¿por qué la pantalla sigue negra?
     // ¿Qué orden vuelca el buffer hacia los píxeles físicos del vidrio?
     // display.display();
-
+    display.display();
     Serial.println("[OLED] Cabecera visual renderizada exitosamente.");
 }
 
