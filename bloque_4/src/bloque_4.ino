@@ -92,7 +92,7 @@ void runSystemPOST() {
     Serial.println("==========================================");
 
     // TODO 4.1: Mostrar la cabecera visual invocando 
-    showBootHeader()
+    showBootHeader();
   
 
     // TODO 4.2: Probar secuencialmente los 4 subsistemas usando logBoot(nombre, estado):
@@ -105,7 +105,7 @@ void runSystemPOST() {
     delay(500);
 
     // TODO 4.3: Concluir la rutina mostrando la barra final con 
-    showSystemReady()
+    showSystemReady();
 
 }
 
