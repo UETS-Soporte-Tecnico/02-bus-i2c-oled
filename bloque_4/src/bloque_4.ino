@@ -92,19 +92,18 @@ void runSystemPOST() {
     Serial.println("==========================================");
 
     // TODO 4.1: Mostrar la cabecera visual invocando showBootHeader()
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    showBootHeader();
 
-    // TODO 4.2: Probar secuencialmente los 4 subsistemas usando logBoot(nombre, estado):
-    // 1. logBoot("ESP32 240MHz", true);
-    // 2. logBoot("I2C @ 400kHz", true);
-    // 3. logBoot("OLED 0x3C", true);
-    // 4. logBoot("Bateria 8.4V", true);
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    // TODO 4.2: Probar secuencialmente los 4 subsistemas usando logBoot(nombre, estado)
+    logBoot("ESP32 240MHz", true);
+    logBoot("I2C @ 400kHz", true);
+    logBoot("OLED 0x3C", true);
+    logBoot("Bateria 8.4V", true);
 
     delay(500);
 
     // TODO 4.3: Concluir la rutina mostrando la barra final con showSystemReady()
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    showSystemReady();
 }
 
 void setup() {
@@ -114,14 +113,15 @@ void setup() {
 
     // Inicializar bus I2C
     Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
-    Wire.setClock(I2C_CLOCK_SPEED);
+    Wire.setClok(I2C_CLOCK_SPEED);
 
-    // TODO 4.4: Orquestar el arranque:
-    // 1. Escanear bus: int total = scanI2CBus();
-    // 2. Si total > 0 y la pantalla se inicializa con initDisplay():
-    //    Ejecutar runSystemPOST();
-    // 3. Si no, reportar falla por el Serial Monitor.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    // TODO 4.4: Orquestar el arranque
+    int total = scanI2CBus();
+    if (total > 0 && initDisplay()) {
+        runSystemPOST();
+    } else {
+        Serial.println("[ERROR] Fallo general en la inicializacion de hardware.");
+    }
 }
 
 void loop() {
