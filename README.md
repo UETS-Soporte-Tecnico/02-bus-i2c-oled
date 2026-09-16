@@ -1,3 +1,4 @@
+link de video: https://youtu.be/0up3KK0kZs8
 # ⚡ Starter-Kit: Taller Práctico Semana 02 — Soporte Técnico (3° BGU UETS)
 ### Protocolo Bus I2C, Scanner de Hardware y Telemetría en Pantalla OLED SSD1306
 
