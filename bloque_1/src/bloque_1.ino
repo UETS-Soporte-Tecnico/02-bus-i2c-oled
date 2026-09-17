@@ -1,16 +1,49 @@
-// ============================================================================
-// UETS SOPORTE TÉCNICO — SEMANA 02 — BLOQUE 1: ESCÁNER DE BUS I2C
-// 3° Bachillerato Técnico en Informática (2026–2027)
-// ============================================================================
-
 #include <Arduino.h>
 #include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 #define SERIAL_BAUD 115200
 #define I2C_SDA_PIN 21
 #define I2C_SCL_PIN 22
-#define I2C_CLOCK_SPEED 400000 // 400 kHz (Modo Rápido)
-#define OLED_I2C_ADDR 0x3C     // Dirección física esperada de la pantalla OLED
+#define I2C_CLOCK_SPEED 400000 
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET_PIN -1
+#define OLED_I2C_ADDR 0x3C
+
+Adafruit_SSD1306 display(
+    SCREEN_WIDTH, 
+    SCREEN_HEIGHT, 
+    &Wire, 
+    OLED_RESET_PIN
+);
+
+void dibujarOjos(bool parpadeando) {
+    display.clearDisplay();
+
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(1);
+    display.setCursor(8,0);
+    display.println(">> ESP32 SISTEMA <<");
+    display.drawLine(0, 10, 128, 10, SSD1306_WHITE);
+
+    if (!parpadeando) {
+        display.fillCircle(40, 38, 14, SSD1306_WHITE);
+        display.fillCircle(40, 38, 5, SSD1306_BLACK);
+
+        display.fillCircle(88, 38, 14, SSD1306_WHITE);
+        display.fillCircle(88, 38, 5, SSD1306_BLACK);
+    } else {
+        for (int i = 0; i < 3; i++) {
+            display.drawLine(26, 38 + i, 54, 38 + i, SSD1306_WHITE);
+            display.drawLine(74, 38 + i, 102, 38 + i, SSD1306_WHITE);
+        }
+    }
+    
+    display.display();
+}
 
 void setup() {
     Serial.begin(SERIAL_BAUD);
@@ -49,9 +82,20 @@ void setup() {
     } else {
         Serial.printf("\n--- BARRIDO FINALIZADO: %d dispositivo(s) encontrado(s) ---\n", devicesFound);
     }
+
+    if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_I2C_ADDR)) {
+        Serial.println("[OLED] ERROR: Pantalla no detectada.");
+        while (true);
+    }
+
+    dibujarOjos(false);
 }
 
 void loop() {
-    // El escaneo de hardware se ejecuta una sola vez al encender.
-    delay(1000);
+    delay(3000);
+
+    dibujarOjos(true);
+    delay(150);
+
+    dibujarOjos(false);
 }
