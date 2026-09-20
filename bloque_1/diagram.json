@@ -4,15 +4,21 @@
   "editor": "wokwi",
   "parts": [
     { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -20, "left": -50, "attrs": {} },
-    { "type": "board-ssd1306", "id": "oled", "top": 120, "left": 180, "attrs": { "i2cAddress": "0x3c" } }
+    {
+      "type": "board-ssd1306",
+      "id": "oled",
+      "top": 120,
+      "left": 180,
+      "attrs": { "i2cAddress": "0x3c" }
+    }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
     [ "esp:RX", "$serialMonitor:TX", "", [] ],
     [ "esp:GND.1", "oled:GND", "black", [ "v0" ] ],
-    [ "esp:3V3", "oled:VCC", "red", [ "v0" ] ],
-    [ "esp:22", "oled:SCL", "gold", [ "v0" ] ],
-    [ "esp:21", "oled:SDA", "green", [ "v0" ] ]
+    [ "esp:3V3", "oled:VCC", "red", [ "h-21.81", "v212", "h294.82" ] ],
+    [ "esp:22", "oled:SCL", "gold", [ "h16.44", "v87.2", "h169.87" ] ],
+    [ "esp:21", "oled:SDA", "green", [ "h45.24", "v48.8", "h150.9" ] ]
   ],
   "dependencies": {}
 }
