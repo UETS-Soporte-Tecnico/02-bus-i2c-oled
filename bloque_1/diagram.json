@@ -13,6 +13,5 @@
     [ "esp:3V3", "oled:VCC", "red", [ "v0" ] ],
     [ "esp:22", "oled:SCL", "gold", [ "v0" ] ],
     [ "esp:21", "oled:SDA", "green", [ "v0" ] ]
-  ],
-  "dependencies": {}
+  ]
 }
