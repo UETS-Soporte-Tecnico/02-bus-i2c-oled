@@ -29,9 +29,6 @@ void setup() {
 
     Serial.println("\n[BLOQUE 2] Inicializando Pantalla OLED SSD1306...");
 
-    // Inicializamos el bus I2C
-    // SDA = GPIO21
-    // SCL = GPIO22
     Wire.begin(21, 22);
 
     // Inicializamos la pantalla OLED
