@@ -4,18 +4,21 @@
   "editor": "wokwi",
   "parts": [
     { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -20, "left": -50, "attrs": {} },
-    { "type": "board-ssd1306", "id": "oled", "top": 120, "left": 180, "attrs": { "i2cAddress": "0x3c" } }
+    {
+      "type": "board-ssd1306",
+      "id": "oled",
+      "top": 120,
+      "left": 180,
+      "attrs": { "i2cAddress": "0x3c" }
+    }
   ],
   "connections": [
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
     [ "esp:RX", "$serialMonitor:TX", "", [] ],
     [ "esp:GND.1", "oled:GND", "black", [ "v0" ] ],
-    [ "esp:3V3", "oled:VCC", "red", [ "v0" ] ],
-    [ "esp:22", "oled:SCL", "gold", [ "v0" ] ],
-    [ "esp:21", "oled:SDA", "green", [ "v0" ] ]
+    [ "esp:3V3", "oled:VCC", "red", [ "v-66.4", "h273.01" ] ],
+    [ "esp:22", "oled:SCL", "gold", [ "h26.04", "v-124", "h160.27" ] ],
+    [ "esp:21", "oled:SDA", "green", [ "h74.04", "v-143.2", "h122.1" ] ]
   ],
-  "dependencies": {
-    "Adafruit SSD1306": "2.5.13",
-    "Adafruit GFX Library": "1.11.11"
-  }
+  "dependencies": { "Adafruit SSD1306": "2.5.13", "Adafruit GFX Library": "1.11.11" }
 }
