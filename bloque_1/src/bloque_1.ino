@@ -1,8 +1,3 @@
-// ============================================================================
-// UETS SOPORTE TÉCNICO — SEMANA 02 — BLOQUE 1: ESCÁNER DE BUS I2C
-// 3° Bachillerato Técnico en Informática (2026–2027)
-// ============================================================================
-
 #include <Arduino.h>
 #include <Wire.h>
 
@@ -24,10 +19,6 @@ void setup() {
     // Pista: Usa Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
     /* ESCRIBE TU CÓDIGO AQUÍ. */
         Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
-    // TODO 1.2: Configurar la velocidad del reloj a 400kHz (Modo Rápido).
-    // Pregunta Guía: ¿Qué función configura la frecuencia de reloj del bus I2C?
-    // Pista: Usa Wire.setClock(I2C_CLOCK_SPEED);
-    /* ESCRIBE TU CÓDIGO AQUÍ */
         Wire.setClock(I2C_CLOCK_SPEED);
     Serial.println("[I2C] Bus configurado en SDA:GPIO21, SCL:GPIO22 a 400kHz.\n");
     Serial.println("--- INICIANDO BARRIDO DE DIRECCIONES (0x01 .. 0x7E) ---");
