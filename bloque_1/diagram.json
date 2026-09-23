@@ -16,7 +16,7 @@
     [ "esp:TX", "$serialMonitor:RX", "", [] ],
     [ "esp:RX", "$serialMonitor:TX", "", [] ],
     [ "esp:GND.1", "oled:GND", "black", [ "v0" ] ],
-    [ "esp:3V3", "oled:VCC", "red", [ "h-31.41", "v116", "h304.42" ] ],
+    [ "esp:3V3", "oled:VCC", "red", [ "h-31.41", "v87.2", "h304.42" ] ],
     [ "esp:22", "oled:SCL", "gold", [ "h35.64", "v0.8", "h150.67" ] ],
     [ "esp:21", "oled:SDA", "green", [ "v0.8", "h196.14" ] ]
   ],
